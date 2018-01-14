@@ -53,6 +53,13 @@ export const constantRouterMap = [
         name: 'Add',
         component: _import('coin/AddCoin'),
         meta: { title: '添加货币', icon: 'form' }
+      },
+      {
+        path: 'edit/:id',
+        name: 'Edit',
+        hidden: true,
+        component: _import('coin/AddCoin'),
+        meta: { title: '编辑货币', icon: 'form' }
       }
     ]
   },

@@ -4,7 +4,7 @@
     <div class="filter-container">
       <el-input @keyup.enter.native="handleFilter" style="width: 120px;" class="filter-item" placeholder="id" v-model="listQuery.id">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 180px;" class="filter-item" placeholder="货币名称" v-model="listQuery.name">
+      <el-input @keyup.enter.native="handleFilter" style="width: 180px;" class="filter-item" placeholder="交易所名称" v-model="listQuery.name">
       </el-input>
       <!-- <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.country" placeholder="国家">
         <el-option v-for="item in countryOptions" :key="item" :label="item" :value="item">
@@ -25,19 +25,9 @@
           {{scope.row.id}}
         </template>
       </el-table-column>
-      <el-table-column align="center" label='中文名称' width="100">
-        <template slot-scope="scope">
-          {{scope.row.name_cn}}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label='外文名称' width="100">
+      <el-table-column align="center" label='名称' width="100">
         <template slot-scope="scope">
           <router-link :to="'/exchange/edit/' + scope.row.id">{{scope.row.name}}</router-link>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="简介">
-        <template slot-scope="scope">
-          {{scope.row.brief}}
         </template>
       </el-table-column>
       <el-table-column label="国家" width="100" align="center">
@@ -45,14 +35,19 @@
           <span>{{scope.row.country}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
+      <el-table-column align="center" label="简介">
         <template slot-scope="scope">
-          {{scope.row.pageviews}}
+          {{scope.row.brief}}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="类型" width="110" align="center">
+      <el-table-column label="星级" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
+          <el-rate disabled v-model="scope.row.grade"></el-rate>
+        </template>
+      </el-table-column>
+      <el-table-column label="交易方式" width="120" align="center">
+        <template slot-scope="scope">
+          <el-tag v-for="(mode, index) in scope.row.modes" :key="index">{{mode | statusFilter}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="110">
@@ -87,9 +82,10 @@ export default {
           'id': '990000198806102053',
           'brief': '火币全球专业站，是火币集团旗下服务于全球专业交易用户的创新数字资产交易平台，致力于发现优质的创新数字资产投资机会，目前提供四十多种数字资产品类的交易及投资服务，总部位于新加坡，由火币全球专业站团队负责运营',
           'status': 'draft',
-          'name': 'HuobiPro',
-          'name_cn': '火币Pro',
+          'name': '火币Pro',
           'country': '中国',
+          modes: [1, 2, 3],
+          'grade': 5,
           'display_time': '1980-04-29 09:05:33',
           'pageviews': 4244
         },
@@ -97,8 +93,9 @@ export default {
           'id': '420000197605136649',
           'brief': '币安交易平台是由前OKCoin联合创始人赵长鹏（CZ）领导的一群数字资产爱好者创建而成的一个专注区块链资产的交易平台，总部位于日本东京。',
           'status': 'published',
-          'name': 'Binance',
-          'name_cn': '币安网',
+          'name': '币安网',
+          'grade': 4,
+          modes: [1, 3],
           'country': '日本',
           'display_time': '2009-10-08 13:19:35',
           'pageviews': 1856
@@ -108,7 +105,8 @@ export default {
           'brief': 'Bitfinex是全世界最大、最高级的比特币交易平台之一，支持以太坊、比特币、莱特币、以太经典等虚拟币的交易，每天的成交量达30多亿人民币。',
           'status': 'published',
           'name': 'Bitfinex',
-          'name_cn': 'Bitfinex',
+          'grade': 1,
+          modes: [3],
           'country': '中国香港',
           'display_time': '1987-07-01 15:16:23',
           'pageviews': 4014
@@ -118,13 +116,13 @@ export default {
     }
   },
   filters: {
-    statusFilter(status) {
+    statusFilter(mode) {
       const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
+        '1': '法币',
+        '2': '现货',
+        '3': '期货'
       }
-      return statusMap[status]
+      return statusMap[mode]
     }
   },
   created() {
@@ -153,7 +151,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
 .filter-container{
   margin-bottom: 12px;
 }
