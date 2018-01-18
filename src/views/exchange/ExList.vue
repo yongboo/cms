@@ -6,7 +6,7 @@
       </el-input>
       <el-input @keyup.enter.native="handleFilter" style="width: 180px;" class="filter-item" placeholder="交易所名称" v-model="listQuery.name">
       </el-input>
-      <!-- <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.country" placeholder="国家">
+      <!-- <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.country" placeholder="所在地">
         <el-option v-for="item in countryOptions" :key="item" :label="item" :value="item">
         </el-option>
       </el-select> -->
@@ -30,9 +30,9 @@
           <router-link :to="'/exchange/edit/' + scope.row.id">{{scope.row.name}}</router-link>
         </template>
       </el-table-column>
-      <el-table-column label="国家" width="100" align="center">
+      <el-table-column label="所在地" width="100" align="center">
         <template slot-scope="scope">
-          <span>{{scope.row.country}}</span>
+          <span>{{scope.row.region}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="简介">
@@ -45,11 +45,11 @@
           <el-rate disabled v-model="scope.row.grade"></el-rate>
         </template>
       </el-table-column>
-      <el-table-column label="交易方式" width="120" align="center">
+      <!-- <el-table-column label="交易方式" width="120" align="center">
         <template slot-scope="scope">
           <el-tag v-for="(mode, index) in scope.row.modes" :key="index">{{mode | statusFilter}}</el-tag>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column align="center" label="操作" width="110">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row.id)">编辑</el-button>
@@ -83,7 +83,7 @@ export default {
           'brief': '火币全球专业站，是火币集团旗下服务于全球专业交易用户的创新数字资产交易平台，致力于发现优质的创新数字资产投资机会，目前提供四十多种数字资产品类的交易及投资服务，总部位于新加坡，由火币全球专业站团队负责运营',
           'status': 'draft',
           'name': '火币Pro',
-          'country': '中国',
+          'region': '中国',
           modes: [1, 2, 3],
           'grade': 5,
           'display_time': '1980-04-29 09:05:33',
@@ -96,7 +96,7 @@ export default {
           'name': '币安网',
           'grade': 4,
           modes: [1, 3],
-          'country': '日本',
+          'region': '日本',
           'display_time': '2009-10-08 13:19:35',
           'pageviews': 1856
         },
@@ -107,7 +107,7 @@ export default {
           'name': 'Bitfinex',
           'grade': 1,
           modes: [3],
-          'country': '中国香港',
+          'region': '中国香港',
           'display_time': '1987-07-01 15:16:23',
           'pageviews': 4014
         }

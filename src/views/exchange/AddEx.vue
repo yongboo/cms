@@ -4,8 +4,8 @@
       <el-form-item label="名称：">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="国家：">
-        <el-input v-model="form.country"></el-input>
+      <el-form-item label="所在地：">
+        <el-input v-model="form.region"></el-input>
       </el-form-item>
       <el-form-item label="官网地址：">
         <el-input v-model="form.website" placeholder="多个地址用竖线'|'隔开'"></el-input>
@@ -55,7 +55,7 @@ export default {
     return {
       form: {
         name: '',
-        country: '',
+        region: '',
         website: '',
         mode: [],
         grade: 1,
@@ -122,7 +122,7 @@ export default {
     overflow-y: scroll;
   }
   .notice-title{
-    width: 320px;
+    width: 280px;
     margin-bottom: 12px;
   }
   .notice-url{
